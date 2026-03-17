@@ -28,6 +28,14 @@ pipeline {
                 }
             }
         }
+        
+        stage('Deploy with Ansible') {
+            steps {
+                echo 'Deploying application using Ansible...'
+                // Run the playbook through the existing ansible-controller container
+                sh 'docker exec ansible-server ansible-playbook /app/ansible/deploy.yml'
+            }
+        }
     }
     
     post {
