@@ -13,9 +13,9 @@ const Navbar = (props) => {
     }
     return (
         <div>
-            <nav className="navbar navbar-expand-lg sticky-top navbar-light">
+            <nav className="navbar navbar-expand-lg sticky-top navbar-dark">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">CloudQuill (Automated CI/CD)</Link>
+                    <Link className="navbar-brand" to="/">CloudQuill</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
