@@ -90,19 +90,24 @@ const Notecontainer = (props) => {
                     </div>
                 </div>
             </div>
-            <div className='row md-3 my-5'>
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h3>Your Notes</h3>
-                    <div className="w-50">
+            
+            <div className='row my-5'>
+                <div className="col-12 mb-4">
+                    <div className="d-flex justify-content-center">
                         <input 
                             type="search" 
                             className="form-control" 
-                            placeholder="🔍 Search notes by title or description..." 
+                            style={{ maxWidth: '600px', padding: '15px 20px', borderRadius: '50px' }}
+                            placeholder="🔍 Search your notes by title or description..." 
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
                 </div>
+            </div>
+
+            <div className='row'>
+                <h3 className="mb-4">Your Notes</h3>
                 <div className="container text-muted">
                     {context.notes.length === 0 && "No Notes to be Displayed. ADD Notes"}
                     {context.notes.length > 0 && context.notes.filter(note => 
