@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out source code...'
-                git 'https://github.com/krishparmar22242/CloudQuill.git'
+                git branch: 'main', url: 'https://github.com/krishparmar22242/CloudQuill.git'
             }
         }
         
