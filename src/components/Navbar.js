@@ -26,9 +26,6 @@ const Navbar = (props) => {
                                     <Link className={`nav-link ${location.pathname==="/dashboard"?"active":""}`} aria-current="page" to="/dashboard">Dashboard</Link>
                                 </li>
                             )}
-                            <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname==="/about"?"active":""}`} to="/about">About</Link>
-                            </li>
                         </ul>
                         {!localStorage.getItem('token')?<div className='d-flex '>
                             <Link className="btn btn-primary mx-3" to="/login" role="button">Login</Link>
