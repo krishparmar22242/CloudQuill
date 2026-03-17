@@ -1,0 +1,22 @@
+---
+- name: Deploy CloudQuill Application
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Ensure the application stack is torn down (Clean slate)
+      command: docker compose down
+      args:
+        chdir: /app
+
+    - name: Ensure the application stack is built and running
+      command: docker compose up -d --build
+      args:
+        chdir: /app
+
+    - name: Verify containers are running
+      command: docker ps
+      register: docker_status
+
+    - name: Display running containers
+      debug:
+        var: docker_status.stdout_lines
