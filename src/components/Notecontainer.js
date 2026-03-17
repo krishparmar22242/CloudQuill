@@ -15,8 +15,10 @@ const Notecontainer = (props) => {
         else{
             navigate("/login")
         }
-    })
+        // eslint-disable-next-line
+    }, [])
 
+    const [searchQuery, setSearchQuery] = useState("");
     const [note, setNote] = useState({
         "etitle": "",
         "edescription": "",
@@ -89,11 +91,29 @@ const Notecontainer = (props) => {
                 </div>
             </div>
             <div className='row md-3 my-5'>
-                <h3>Your Notes</h3>
-                <div className="container">
-                    {context.notes.length===0 && "No Notes to be Displayed ADD Notes"}
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Your Notes</h3>
+                    <div className="w-50">
+                        <input 
+                            type="search" 
+                            className="form-control" 
+                            placeholder="🔍 Search notes by title or description..." 
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
                 </div>
-                {context.notes && context.notes.map((note) => {
+                <div className="container text-muted">
+                    {context.notes.length === 0 && "No Notes to be Displayed. ADD Notes"}
+                    {context.notes.length > 0 && context.notes.filter(note => 
+                        note.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                        note.description.toLowerCase().includes(searchQuery.toLowerCase())
+                    ).length === 0 && "No notes match your search."}
+                </div>
+                {context.notes && context.notes.filter(note => 
+                    note.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                    note.description.toLowerCase().includes(searchQuery.toLowerCase())
+                ).map((note) => {
                     return <Notes key={note._id} updatenote={updatenote} note={note} />
                 })}
             </div>
