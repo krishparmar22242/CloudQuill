@@ -21,9 +21,11 @@ const Navbar = (props) => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname==="/"?"active":""}`}aria-current="page" to="/">Home</Link>
-                            </li>
+                            {localStorage.getItem('token') && (
+                                <li className="nav-item">
+                                    <Link className={`nav-link ${location.pathname==="/dashboard"?"active":""}`} aria-current="page" to="/dashboard">Dashboard</Link>
+                                </li>
+                            )}
                             <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname==="/about"?"active":""}`} to="/about">About</Link>
                             </li>

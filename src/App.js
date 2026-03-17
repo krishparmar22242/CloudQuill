@@ -5,6 +5,7 @@ import About from './components/About'
 import Login from './components/Login'
 import Home from './components/Home'
 import Signup from './components/Signup'
+import Landing from './components/Landing'
 import Notestate from './context/notes/Notestate';
 import Alert from './components/Alert';
 const App = () => {
@@ -28,7 +29,8 @@ const App = () => {
           <Alert alert={alert}/>
           <div className="container">
             <Routes>
-              <Route exact path="/" element={<Home showalert={showalert}/>} />
+              <Route exact path="/" element={<Landing />} />
+              <Route exact path="/dashboard" element={<Home showalert={showalert}/>} />
               <Route exact path="/about" element={<About/>} />
               <Route exact path="/login" element={<Login showalert={showalert}/>} />
               <Route exact path="/signup" element={<Signup showalert={showalert}/>} />
