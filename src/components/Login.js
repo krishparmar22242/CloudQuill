@@ -23,7 +23,7 @@ const Login = (props) => {
         {
             localStorage.setItem('token',responseapi.auth_token)
             props.showalert("success","User Logged in Successfully")
-            navigate("/")
+            navigate("/dashboard")
         }
         else{
             props.showalert("danger","User Logged in Failed")

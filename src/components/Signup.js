@@ -24,8 +24,8 @@ const Signup = (props) => {
         console.log(responseapi)
         if (responseapi.success) {
             localStorage.setItem('token',responseapi.auth_token)
-            props.showalert("success","User Signed in Successfully")
-            navigate("/login")
+            props.showalert("success","User created & Logged in Successfully")
+            navigate("/dashboard")
 
         }
         else {
