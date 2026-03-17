@@ -39,14 +39,13 @@ const Notestate = (props) => {
 
   //Delete a note functionality
   const deletenote = async (noteid) => {
-    try 
+    try
     {
       const response=await fetch(`${hosturl}/deletenote/${noteid}`, {
         method: 'DELETE',
         headers: {
-          'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3ZjhlMDYzMzhiNWJiYmI5MTU0NjNjIn0sImlhdCI6MTczNjQzOTY4N30.WLLWPaDzRHrzdFHveV_5kKOTjzdUu1lPt0NmJ5QUkB4'
-        },
-        body: JSON.stringify()
+          'auth-token': localStorage.getItem('token')
+        }
       });
       const json= await response.json()
       console.log(json)
@@ -54,7 +53,7 @@ const Notestate = (props) => {
       setNotes(newnote)
       console.log("Note Deleted with id", noteid)
       props.showalert("success","Note Deleted Successfully")
-    } 
+    }
     catch (error) 
     {
       props.showalert("danger","Sorry Note cannot be Deleted Some Error Occured!!!!")
@@ -69,20 +68,25 @@ const Notestate = (props) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3ZjhlMDYzMzhiNWJiYmI5MTU0NjNjIn0sImlhdCI6MTczNjQzOTY4N30.WLLWPaDzRHrzdFHveV_5kKOTjzdUu1lPt0NmJ5QUkB4'
+          'auth-token': localStorage.getItem('token')
         },
         body: JSON.stringify({title, description, tag})
       });
       const json= await response.json()
       console.log(json)
-      for (let index = 0; index < notes.length; index++) {
-        const element = notes[index];
+      
+      // Update state correctly by creating a new array
+      const newNotes = JSON.parse(JSON.stringify(notes))
+      for (let index = 0; index < newNotes.length; index++) {
+        const element = newNotes[index];
         if (element._id === noteid) {
           element.title = title
           element.description = description
           element.tag = tag
+          break;
         }
       }
+      setNotes(newNotes);
       props.showalert("success","Note Edited Successfully")
     } 
     catch (error) 
