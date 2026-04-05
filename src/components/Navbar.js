@@ -30,7 +30,7 @@ const Navbar = (props) => {
                         {!localStorage.getItem('token')?<div className='d-flex '>
                             <Link className="btn btn-primary mx-3" to="/login" role="button">Login</Link>
                             <Link className="btn btn-primary mx-3" to="/signup" role="button">Sign Up</Link>
-                        </div>:<button className="btn btn-primary" onClick={handlelogout}>LogOut</button>}
+                        </div>:<button className="btn btn-primary" onClick={handlelogout}>LogOut hello</button>}
                     </div>
                 </div>
             </nav>
