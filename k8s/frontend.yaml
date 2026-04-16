@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          # Built locally in Minikube's Docker env
+          image: cloudquill-frontend:latest
+          imagePullPolicy: Never
+          ports:
+            # Your docker-compose mapped 3000:80. The internal Nginx container runs on 80.
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  # Using NodePort so you can access the React UI in your browser using standard K8s networking
+  type: NodePort
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 80

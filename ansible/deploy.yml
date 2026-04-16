@@ -1,22 +1,37 @@
 ---
-- name: Deploy CloudQuill Application
+- name: Deploy CloudQuill Application to Kubernetes
   hosts: localhost
   connection: local
   tasks:
-    - name: Ensure the application stack is torn down (Clean slate)
+    - name: Ensure old Docker Compose setup is torn down (frees up ports)
       command: docker compose down
       args:
         chdir: /app
+      ignore_errors: true
 
-    - name: Ensure the application stack is built and running
-      command: docker compose up -d --build
+    - name: Build Backend Docker Image
+      command: docker build -t cloudquill-backend:latest ./backend
       args:
         chdir: /app
 
-    - name: Verify containers are running
-      command: docker ps
-      register: docker_status
+    - name: Build Frontend Docker Image
+      command: docker build -t cloudquill-frontend:latest .
+      args:
+        chdir: /app
 
-    - name: Display running containers
+    - name: Load images into Minikube Local Registry (So K8s can find them)
+      shell: "docker save cloudquill-backend:latest cloudquill-frontend:latest | docker exec -i minikube docker load"
+      ignore_errors: false
+
+    - name: Apply Kubernetes configurations
+      command: kubectl apply -f ./k8s
+      args:
+        chdir: /app
+
+    - name: Verify Kubernetes pods are running
+      command: kubectl get pods
+      register: k8s_status
+
+    - name: Display running K8s pods
       debug:
-        var: docker_status.stdout_lines
+        var: k8s_status.stdout_lines

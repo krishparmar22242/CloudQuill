@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          # In Minikube, we will build this image directly into its internal Docker registry
+          image: cloudquill-backend:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          env:
+            # Matches the exact connection string from your docker-compose file
+            - name: MONGO_URI
+              value: "mongodb://mongodb:27017/cloudquill"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  # Using NodePort so your React app in the browser can reach the backend from outside the K8s cluster
+  type: NodePort
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
