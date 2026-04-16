@@ -1,0 +1,1 @@
+npx smee-client --url https://smee.io/BlbD2YehGqwNAOn2 --target "http://localhost:8080/buildByToken/build?job=CloudQuill-CI-Pipeline&token=cloudquill123"
