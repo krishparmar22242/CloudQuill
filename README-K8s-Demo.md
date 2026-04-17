@@ -13,6 +13,7 @@ Before you start your presentation, make sure your environment is running so you
 
 2. **Start Jenkins & Smee:**
    Make sure your Jenkins server is running and your Smee webhook forwarder is active in a terminal so GitHub can talk to Jenkins.
+   *(Note: give Jenkins permission to talk to Docker by running `docker exec -u root jenkins chmod 666 /var/run/docker.sock`)*
    ```bash
    smee --url https://smee.io/YOUR_URL --path /github-webhook/ --port 8080
    ```

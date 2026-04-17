@@ -8,6 +8,10 @@ This guide contains the step-by-step commands to fully test your automated CI/CD
 Before triggering anything, make sure your core applications are running on your Windows machine:
 1. Open **Docker Desktop** and wait for it to be running.
 2. Open **Jenkins** (ensure your local Jenkins server is running).
+   *Note: If your Jenkins is running as a Docker container, ensure it has permission to run Docker commands by running this in your terminal once:*
+   ```bash
+   docker exec -u root jenkins chmod 666 /var/run/docker.sock
+   ```
 3. Open a terminal and start your Kubernetes cluster:
    ```bash
    minikube start --driver=docker
