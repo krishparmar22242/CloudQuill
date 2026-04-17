@@ -28,6 +28,11 @@
       args:
         chdir: /app
 
+    - name: Force K8s to restart pods and use the new images
+      command: kubectl rollout restart deployment frontend backend
+      args:
+        chdir: /app
+
     - name: Verify Kubernetes pods are running
       command: kubectl get pods
       register: k8s_status
