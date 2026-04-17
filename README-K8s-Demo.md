@@ -23,12 +23,13 @@ Before you start your presentation, make sure your environment is running so you
    # First build the updated Ansible Dockerfile
    docker build -t cloudquill-ansible ./ansible
    
-   # Run the container with K8s volume mounts (safe copy method)
+   # Run the container with K8s volume mounts (safe copy method for PowerShell)
    docker rm -f ansible-server
-   docker run -d --name ansible-server -v /var/run/docker.sock:/var/run/docker.sock -v ~/.kube:/tmp/.kube -v ~/.minikube:/root/.minikube -v "$(pwd)":/app cloudquill-ansible
+   docker run -d --name ansible-server -v /var/run/docker.sock:/var/run/docker.sock -v "${HOME}/.kube:/tmp/.kube" -v "${HOME}/.minikube:/root/.minikube" -v "${PWD}:/app" cloudquill-ansible
    
-   # Inject the Windows credentials into the Linux container safely
-   docker exec ansible-server sh -c "mkdir -p /root/.kube && cp -r /tmp/.kube/* /root/.kube/ && sed -i 's~C:\\\\\\\\Users\\\\\\\\krish\\\\\\\\.minikube~/root/.minikube~g' /root/.kube/config && sed -i 's|127.0.0.1:.*|192.168.49.2:8443|g' /root/.kube/config"
+   # Inject the Windows credentials into the Linux container safely (using Python to bypass PowerShell escaping bugs)
+   docker exec ansible-server sh -c "mkdir -p /root/.kube && cp -r /tmp/.kube/* /root/.kube/"
+   docker exec ansible-server python -c "import re; f=open('/root/.kube/config'); c=f.read(); f.close(); c=c.replace(chr(67)+':'+chr(92)+'Users'+chr(92)+'krish'+chr(92)+'.minikube', '/root/.minikube'); c=c.replace(chr(92), '/'); c=re.sub(r'https://127\.0\.0\.1:\d+', 'https://192.168.49.2:8443', c); f=open('/root/.kube/config', 'w'); f.write(c); f.close();"
    ```
 
 ---
