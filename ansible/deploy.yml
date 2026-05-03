@@ -18,7 +18,7 @@
       # We must inject the Minikube Network IP so the React App knows where to route API calls instead of checking 'localhost'
       shell: |
         MINIKUBE_IP=$(kubectl get node minikube -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}')
-        docker build --build-arg REACT_APP_API_URL=http://$MINIKUBE_IP:5000 -t cloudquill-frontend:latest .
+        docker build --build-arg REACT_APP_API_URL=http://$MINIKUBE_IP:30005 -t cloudquill-frontend:latest .
       args:
         chdir: /app
 
