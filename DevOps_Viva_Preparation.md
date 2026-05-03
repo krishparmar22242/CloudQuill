@@ -87,6 +87,7 @@ This document contains a comprehensive set of Questions and Answers to prepare y
 ## Part 6: Kubernetes (K8s) Integration & Orchestration
 
 **Q24: You migrated this project from Docker Compose to Kubernetes. Why is Kubernetes considered a massive upgrade over Docker Compose for production DevOps?**
+
 **Answer:** Docker Compose is excellent for local development on a single machine, but Kubernetes (K8s) is an industrial-grade **container orchestration engine** built for distributed, multi-node environments. Kubernetes provides Enterprise features that Compose lacks natively: **Self-Healing** (automatically restarting crashed containers), **Horizonal Auto-scaling** (spinning up more replicas under heavy traffic), and **Zero-Downtime Rolling Updates**.
 
 **Q25: Can you explain the Kubernetes objects (YAML files) you wrote for this project?**
