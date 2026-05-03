@@ -4,17 +4,18 @@ This guide contains the step-by-step commands to fully test your automated CI/CD
 
 ---
 
-### Step 1: Start Your Base Infrastructure
-Before triggering anything, make sure your core applications are running on your Windows machine:
-1. Open **Docker Desktop** and wait for it to be running.
-2. Open **Jenkins** (ensure your local Jenkins server is running).
-   *Note: If your Jenkins is running as a Docker container, ensure it has permission to run Docker commands by running this in your terminal once:*
+### Step 1: Start Your Base Infrastructure (CRITICAL IF YOU REBOOTED)
+If you recently turned on your computer, Docker resets its security and stops background services. **You must run these 3 checks perfectly before doing a demo:**
+
+1. **Wait for Docker:** Open **Docker Desktop** and wait for the green bar to say "Running".
+2. **Restore Jenkins API Access:** Your Jenkins container loses its Docker socket privileges on restart. Open PowerShell and unlock it:
    ```bash
    docker exec -u root jenkins chmod 666 /var/run/docker.sock
    ```
-3. Open a terminal and start your Kubernetes cluster:
+3. **Awaken Minikube:** Your Kubernetes cluster will be sleeping. Wake it up and get the fresh host IP configuration:
    ```bash
-   minikube start --driver=docker
+   minikube stop
+   minikube start
    ```
 
 ### Step 2: Start the Webhook Forwarder (Smee)
@@ -67,9 +68,13 @@ Now the environment is 100% ready. Let's trigger a real deployment.
    ```bash
    kubectl get pods
    ```
-3. **See the Result:** Open the final application in your browser to see your code changes live:
+3. **See the Result (The Browser Pop-up):** The Jenkins pipeline deploys your code backward to the cluster, but it won't open your browser natively. Run this final command to automatically open a fresh browser tab mapped directly to the Minikube internal IP:
    ```bash
    minikube service frontend
+   ```
+4. **Connect the Backend API Tunnel (Crucial for Windows):** Windows blocks direct pings to Minikube's 192.168.x.x network. Open **one final terminal tab** and run this to unlock API requests from your browser to Kubernetes:
+   ```bash
+   kubectl port-forward svc/backend 30005:5000
    ```
 
 Whenever you want to test the full loop again, you only need to repeat **Step 4** (Push Code) as long as everything from Steps 1-3 is still running in the background!
