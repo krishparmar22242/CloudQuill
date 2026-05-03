@@ -1,6 +1,11 @@
 # Stage 1: Build the React application
 FROM node:18-alpine as build
 
+# Accept arguments passed during the Ansible Docker Build phase
+ARG REACT_APP_API_URL
+# Bake the argument into the container as an environment variable before building React
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+
 WORKDIR /app
 
 # Copy package files and install dependencies

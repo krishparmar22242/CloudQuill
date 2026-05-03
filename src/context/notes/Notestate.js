@@ -3,7 +3,8 @@ import Notecontext from '../notes/notecontext.js';
 import { useState } from 'react';
 
 const Notestate = (props) => {
-  const hosturl='http://localhost:5000/api/notes'
+  // We use the env variable if provided (like in K8s), otherwise fallback to localhost for development
+const hosturl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/api/notes` : 'http://localhost:5000/api/notes';
   const initialnotes =[]
   //eslint-disable-next-line
   const [notes, setNotes] = useState(initialnotes);

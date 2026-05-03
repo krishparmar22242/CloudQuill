@@ -7,7 +7,8 @@ const Login = (props) => {
     const handleonchange=(event)=>{
         setCredentials({...credentials,[event.target.name]:event.target.value})
     }
-    const hosturl = "http://localhost:5000/api/auth/"
+    // Use env variable injected during Docker build if present, otherwise fallback to localhost
+    const hosturl = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/api/auth/` : "http://localhost:5000/api/auth/";
     const handlesubmit = async (e) => {
         e.preventDefault()
         const response = await fetch(`${hosturl}/login`, {
