@@ -19,6 +19,7 @@ services:
     environment:
       # Injecting the MongoDB URI to connect to the mongodb service container
       - MONGO_URI=mongodb://mongodb:27017/cloudquill
+      - JWT_SECRET=krish
     depends_on:
       - mongodb
 

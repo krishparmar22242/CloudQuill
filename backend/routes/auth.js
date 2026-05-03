@@ -7,7 +7,7 @@ import fetchuser from '../middleware/fetchuser.js'
 
 const router = Router()
 
-const JWT_secret="Kr&ishi#sagoo@d$boy"
+const JWT_secret = process.env.JWT_SECRET || "Kr&ishi#sagoo@d$boy";
 
 // CREATING A USER THROUGH POST REQUEST IN MONGO DB DATABASE  no login 
 // adding filters and validators to check for invalid name ,email and password 

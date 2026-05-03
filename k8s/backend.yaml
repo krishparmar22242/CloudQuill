@@ -23,6 +23,8 @@ spec:
             # Matches the exact connection string from your docker-compose file
             - name: MONGO_URI
               value: "mongodb://mongodb:27017/cloudquill"
+            - name: JWT_SECRET
+              value: "krish"
 ---
 apiVersion: v1
 kind: Service

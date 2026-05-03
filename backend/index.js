@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import  connecttomongo from "./db.js"
 import express from "express"
 import notesrouter from './routes/notes.js'
